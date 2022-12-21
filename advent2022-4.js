@@ -23,7 +23,7 @@ const findFullOverlaps = () => {
 
   return count;
 };
-console.log(findFullOverlaps()); // Outputs: 433
+console.log(findFullOverlaps());
 
 /*
 --- Day 4: Camp Cleanup ---

@@ -26,7 +26,7 @@ const getTotalCaloriesElfs = () => {
 console.log(getTotalCaloriesElfs());
 
 /*=============================================
-=                   Part 2                    =
+=               Part 2 (TODO)                 =
 =============================================*/
 
 const getMaxCaloriesThreElfs = () => {

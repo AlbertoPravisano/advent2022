@@ -47,7 +47,7 @@ const getPriority = () => {
 console.log(getPriority());
 
 /*=============================================
-=                  Part 2                     =
+=               Part 2 (TODO)                 =
 =============================================*/
 
 /** @returns {string[][]} */
