@@ -3,7 +3,6 @@
   "author": "albertopravisano",
   "version": "1.0.0",
   "description": "Advent of Code 2022",
-  "main": "advent2022-1.js",
   "scripts": {
     "test": "echo \\\"Error: no test specified\\\" && exit 1"
   },
@@ -12,7 +11,7 @@
     "url": "adventofcode2022"
   },
   "keywords": [
-    "adventofcode2022"
+    "adventofcode2022", "javascript", "node", "adventofcode"
   ],
   "license": "ISC"
 }
