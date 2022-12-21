@@ -52,11 +52,16 @@ Output:
 
 const buildFileSystem = () => {
   let fileSystem = { "/": {} };
+  let path = "/";
   let localFolder = {};
   input.forEach((row) => {
     if (row.startsWith("$")) {
-      if (row.includes("ls")) {
-      } else if (row.includes("cd")) {
+      const command = row.split(" ")[1];
+      if (command === "ls") {
+        // TODO
+      } else if (command === "cd") {
+        const folderName = row.split(" ")[2];
+        // TODO
       }
     } else {
       const content = row.split(" ");
@@ -76,6 +81,6 @@ const buildFileSystem = () => {
 
 const getFolderSize = (path) => {
   let size = 0;
-  // TODO: recursive search
+  // TODO
   return size;
 };
