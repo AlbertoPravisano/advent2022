@@ -17,17 +17,19 @@ const getPriorityChar = (letter) => {
 =                  Part 1                     =
 =============================================*/
 
-const getRucksacks = (row) => {
-  const middle = Math.floor(row.length / 2);
-  const r1 = row.substring(0, middle).split("");
-  const r2 = row.substring(middle).split("");
-  return { r1, r2 };
+/** @param {string} rucksack */
+const getCompartments = (rucksack) => {
+  const middle = Math.floor(rucksack.length / 2);
+  const c1 = rucksack.substring(0, middle).split("");
+  const c2 = rucksack.substring(middle).split("");
+  return { c1, c2 };
 };
 
-const findPriorityRucksacks = (r1, r2) => {
+const findPriorityRucksack = (rucksack) => {
+  const { c1, c2 } = getCompartments(rucksack);
   let priority = 0;
-  r1.find((letter1) => {
-    if (r2.findIndex((letter2) => letter1 === letter2) >= 0) {
+  c1.find((letter1) => {
+    if (c2.findIndex((letter2) => letter1 === letter2) >= 0) {
       priority = getPriorityChar(letter1);
       return true;
     }
@@ -37,10 +39,7 @@ const findPriorityRucksacks = (r1, r2) => {
 
 const getPriority = () => {
   let priority = 0;
-  input.forEach((row) => {
-    const { r1, r2 } = getRucksacks(row);
-    priority += findPriorityRucksacks(r1, r2);
-  });
+  input.forEach((rucksack) => (priority += findPriorityRucksack(rucksack)));
   return priority;
 };
 
