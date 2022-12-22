@@ -5,7 +5,7 @@ My advent of code 2022 challenge codes
 - [Day1](./day1/) <span style="color:yellow">\*</span>
 - [Day2](./day2/) <span style="color:yellow">\*\*</span>
 - [Day3](./day3/) <span style="color:yellow">\*</span>
-- [Day4](./day4/) <span style="color:yellow">\*</span>
+- [Day4](./day4/) <span style="color:yellow">\*\*</span>
 - [Day5](./day5/)
 - [Day6](./day6/) <span style="color:yellow">\*</span>
 - [Day7](./day7/)
