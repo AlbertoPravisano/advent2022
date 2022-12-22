@@ -50,30 +50,67 @@ Output:
 }
 */
 
+const navigate = (folder, navigation) => {
+  if (folder === ".." && navigation !== "/") {
+    // Nav back
+    navigation = navigation.split("/").slice(0, -1).join("/");
+    if (navigation.length === 0) {
+      navigation = "/"; // Check minimum path is root
+    }
+  } else {
+    // Add folder to navigation
+    navigation = `${navigation}/${folder}`;
+  }
+  return navigation;
+};
+
+const insertCurrentIntoFolder = (folder, fileName, fileSize) => {
+  const isFolder = isNan(fileSize);
+  if (isFolder) {
+    folder[fileName] = {}; // Add sub-folder to current folder
+  } else {
+    folder[fileName] = fileSize; // Add file and his size to current folder
+  }
+  return folder;
+};
+
+/**
+ * From rootFolder and navigation, returns the content of the folder
+ * @param {object} fileSystem
+ * @param {string} navigation
+ * @returns {object}
+ */
+const getFolderContent = (fileSystem, navigation) => {
+  let folder = {};
+  let navigatedFS = fileSystem;
+  const path = navigation.split("/");
+  path.forEach((navFolder) => {
+    folder = navigatedFS[navFolder];
+    navigatedFS = navigatedFS[navFolder];
+  });
+  return folder;
+};
+
+const checkFolderContent = (navigation, folder) => {
+  return {};
+};
+
 const buildFileSystem = () => {
   let fileSystem = { "/": {} };
-  let path = "/";
-  let localFolder = {};
+  let navigation = "/";
+  let folder = {};
   input.forEach((row) => {
     if (row.startsWith("$")) {
       const command = row.split(" ")[1];
       if (command === "ls") {
-        // TODO
+        fileSystem = checkFolderContent(navigation, folder);
       } else if (command === "cd") {
-        const folderName = row.split(" ")[2];
-        // TODO
+        const navPath = row.split(" ")[2];
+        navigation = navigate(navPath, navigation);
       }
     } else {
       const content = row.split(" ");
-      const isFolder = isNan(Number(content[0]));
-      if (isFolder) {
-        const folderName = content[1];
-        localFolder[folderName] = {};
-      } else {
-        const fileName = content[1];
-        const size = Number(content[0]);
-        localFolder[fileName] = size;
-      }
+      folder = insertCurrentIntoFolder(folder, content[1], Number(content[0]));
     }
   });
   return fileSystem;
