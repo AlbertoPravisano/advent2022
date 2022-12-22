@@ -19,19 +19,14 @@ const getPairSections = (pair) => {
 
 const isFullyOverlapping = (pair) => {
   const { start1, end1, start2, end2 } = getPairSections(pair);
-  if (
-    (start1 <= start2 && end1 >= end2) ||
-    (start2 <= start1 && end2 >= end1)
-  ) {
-    return true;
-  }
+  return (
+    (start1 <= start2 && end1 >= end2) || (start2 <= start1 && end2 >= end1)
+  );
 };
 
-const findFullOverlaps = () => {
-  let count = 0;
-  input.forEach((pair) => isFullyOverlapping(pair) && count++);
-  return count;
-};
+const findFullOverlaps = () =>
+  input.filter((pair) => isFullyOverlapping(pair)).length;
+
 console.log(findFullOverlaps());
 
 /*=============================================
@@ -40,18 +35,11 @@ console.log(findFullOverlaps());
 
 const isOverlapping = (pair) => {
   const { start1, end1, start2, end2 } = getPairSections(pair);
-  if (
-    (end1 >= start2 && start1 <= start2) ||
-    (end2 >= start1 && start2 <= start1)
-  ) {
-    return true;
-  }
+  return (
+    (end1 >= start2 && start1 <= start2) || (end2 >= start1 && start2 <= start1)
+  );
 };
 
-const findOverlaps = () => {
-  let count = 0;
-  input.forEach((pair) => isOverlapping(pair) && count++);
-  return count;
-};
+const findOverlaps = () => input.filter((pair) => isOverlapping(pair)).length;
 
 console.log(findOverlaps());
