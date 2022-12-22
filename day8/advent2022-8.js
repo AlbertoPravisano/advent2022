@@ -1,5 +1,8 @@
 const fs = require("fs");
-const input = fs.readFileSync("input6.txt", "utf8").split("\n");
+const input = fs
+  .readFileSync("input8.txt", "utf8")
+  .split("\n")
+  .map((row) => row.split("").filter((cell) => cell !== "\r"));
 
 /*=============================================
 =                   Part 1                   =
@@ -9,24 +12,24 @@ const input = fs.readFileSync("input6.txt", "utf8").split("\n");
  * @param {number[][]} matrix
  * @see https://betterprogramming.pub/how-to-rotate-a-matrix-in-javascript-2c8a4c64b8d9
  */
-const rotateCounterClockWise = (matrix) => {
-  return matrix
-    .map((row, i) => row.map((_, j) => matrix[matrix.length - 1 - j][i]))
+const rotateCounterClockWise = (matrix) =>
+  matrix
+    .map((row, i) =>
+      row.map((_, j) => {
+        return matrix[matrix.length - 1 - j][i];
+      })
+    )
     .reverse()
     .map((row) => row.reverse());
-};
 
-/**
- * @param {string[]} input
- * @returns {boolean[][]}
- */
-const buildInitialMap = (input) => {
+/** @returns {boolean[][]} */
+const buildInitialMap = () => {
   let mapVisibleTrees = [[]];
   input.forEach((row, indexR) => {
-    row.split("").forEach((_) => mapVisibleTrees[indexR].push(false));
+    row.forEach((_) => mapVisibleTrees[indexR].push(false));
     mapVisibleTrees.push([]);
   });
-  mapVisibleTrees.filter((row) => row.length > 0);
+  mapVisibleTrees = mapVisibleTrees.filter((row) => row.length > 0);
   return mapVisibleTrees;
 };
 
@@ -87,7 +90,7 @@ const isVisibleVertical = (indexRow, indexColumn, treeRow) => {
  *
  * @param {number} indexRow
  * @param {number} indexColumn
- * @param {string[]} treeMap full map of trees
+ * @param {number[][]} treeMap full map of trees
  */
 const isVisibleHorizontal = (indexRow, indexColumn, treeMap) => {
   const invertedTreeMap = rotateCounterClockWise(treeMap);
@@ -96,16 +99,16 @@ const isVisibleHorizontal = (indexRow, indexColumn, treeMap) => {
   return isVisibleVertical(
     newIndexRow,
     newIndexColumn,
-    invertedTreeMap[newIndexColumn].split("")
+    invertedTreeMap[newIndexColumn]
   );
 };
 
 const getVisibleTreesCount = () => {
   let mapVisibleTrees = buildInitialMap(input);
   input.forEach((row, indexRow) =>
-    row.split("").forEach((_, indexColumn) => {
+    row.forEach((_, indexColumn) => {
       if (
-        isVisibleVertical(indexRow, indexColumn, row.split("")) ||
+        isVisibleVertical(indexRow, indexColumn, row) ||
         isVisibleHorizontal(indexRow, indexColumn, input)
       ) {
         mapVisibleTrees[indexRow][indexColumn] = true;
@@ -115,4 +118,4 @@ const getVisibleTreesCount = () => {
   return countVisibleTrees(mapVisibleTrees);
 };
 
-console.log(getVisibleTreesCount());
+console.log(getVisibleTreesCount()); // 1827 too high
