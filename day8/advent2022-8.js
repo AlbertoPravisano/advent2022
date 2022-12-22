@@ -9,6 +9,24 @@ const input = fs
 =============================================*/
 
 /**
+ *
+ * @param {number} indexColumn
+ * @param {number[][]} treeMap full map of trees
+ * @returns {number[]}
+ */
+const buildRowFromColumn = (indexColumn, treeMap) => {
+  let horizontalColumn = [];
+  treeMap.forEach((row) => {
+    row.forEach((cell, currentIndexColumn) => {
+      if (indexColumn === currentIndexColumn) {
+        horizontalColumn.push(cell);
+      }
+    });
+  });
+  return horizontalColumn;
+};
+
+/**
  * @param {number[][]} matrix
  * @see https://betterprogramming.pub/how-to-rotate-a-matrix-in-javascript-2c8a4c64b8d9
  */
@@ -72,7 +90,7 @@ const excludeCurrentTreeFromRow = (treeRow, indexColumn) =>
  * @param {number} indexColumn
  * @param {number[]} treeRow full row of trees
  */
-const isVisibleVertical = (indexRow, indexColumn, treeRow) => {
+const isVisibleVertically = (indexRow, indexColumn, treeRow = []) => {
   if (indexRow === 0 || indexRow === treeRow.length) {
     return true;
   } else {
@@ -92,24 +110,24 @@ const isVisibleVertical = (indexRow, indexColumn, treeRow) => {
  * @param {number} indexColumn
  * @param {number[][]} treeMap full map of trees
  */
-const isVisibleHorizontal = (indexRow, indexColumn, treeMap) => {
-  const invertedTreeMap = rotateCounterClockWise(treeMap);
-  const newIndexRow = invertedTreeMap[indexColumn].length - indexColumn;
+const isVisibleHorizontally = (indexRow, indexColumn, treeMap) => {
+  const newIndexRow = treeMap[indexColumn].length - indexColumn;
   const newIndexColumn = indexRow;
-  return isVisibleVertical(
+  return isVisibleVertically(
     newIndexRow,
     newIndexColumn,
-    invertedTreeMap[newIndexColumn]
+    treeMap[newIndexColumn]
   );
 };
 
 const getVisibleTreesCount = () => {
   let mapVisibleTrees = buildInitialMap(input);
+  const counterClockWiseRotatedMap = rotateCounterClockWise(input);
   input.forEach((row, indexRow) =>
     row.forEach((_, indexColumn) => {
       if (
-        isVisibleVertical(indexRow, indexColumn, row) ||
-        isVisibleHorizontal(indexRow, indexColumn, input)
+        isVisibleVertically(indexRow, indexColumn, row) ||
+        isVisibleHorizontally(indexRow, indexColumn, counterClockWiseRotatedMap)
       ) {
         mapVisibleTrees[indexRow][indexColumn] = true;
       }
@@ -118,4 +136,4 @@ const getVisibleTreesCount = () => {
   return countVisibleTrees(mapVisibleTrees);
 };
 
-console.log(getVisibleTreesCount()); // 1827 too high
+console.log(getVisibleTreesCount()); // 1827 too high, 1335 too low, !1398
